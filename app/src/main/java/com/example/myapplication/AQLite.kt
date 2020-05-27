@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 class AQLite(context: Context): SQLiteOpenHelper(context, name, null, Version ) {
     companion object{
@@ -13,12 +14,13 @@ class AQLite(context: Context): SQLiteOpenHelper(context, name, null, Version ) 
         val TABLE_NAME = "TEST"
         val VALUEX = "VALUEX"
         val VALUEY = "VALUEY"
-        fun insertDATAPOINT(mindOrks: MindOrks, db: SQLiteDatabase){
+        fun insertDATAPOINT(mindOrks: MindOrks, db: SQLiteDatabase, needToClose : Boolean = true){
             var values = ContentValues()
             values.put(VALUEX, mindOrks.x)
             values.put(VALUEY, mindOrks.y)
             db.insert(TABLE_NAME, null, values)
-            db.close()
+            if (needToClose) db.close()
+            Log.d("NEWDATA", mindOrks.toString())
         }
         fun readDATAPOINT(db: SQLiteDatabase):MutableList<MindOrks>{
             var data = db.query(TABLE_NAME, null, null, null, null, null, null)

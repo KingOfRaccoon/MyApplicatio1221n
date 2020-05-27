@@ -8,10 +8,9 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 
-class MindOrks(xx:Double, yy:Double){
+data class MindOrks(var x :Double, var y:Double){
     var name = "123"
-    var x = xx
-    var y = yy
+
     fun draw(): MutableList<Array<Double>> {
         var qwerty = mutableListOf<Array<Double>>()
         for (i in 0..9){
@@ -57,7 +56,6 @@ class NameMindAdapter(ddata: MutableList<MindOrks>):RecyclerView.Adapter<NameMin
             var text : TextView = itemView.findViewById(R.id.name)
             var cardView : CardView = itemView.findViewById(R.id.card1)
             fun bind(mindOrks: MindOrks){
-                text.setText(mindOrks.name)
                 cardView.setOnClickListener {
                     val fm = fragmentManager
                     val ft = fm?.beginTransaction()
