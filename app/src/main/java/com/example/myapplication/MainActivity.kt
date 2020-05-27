@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()
         var f = AllMindFragment().apply { ddata =  qwerty}
+        NameMindAdapter.fragmentManager = supportFragmentManager
         ft.replace(R.id.dostalo, f)
         ft.commit()
     }

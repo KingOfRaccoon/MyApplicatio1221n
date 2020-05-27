@@ -12,15 +12,17 @@ class MindOrks(xx:Double, yy:Double){
     var name = "123"
     var x = xx
     var y = yy
-    fun draw(): MutableList<MindOrks> {
-        var qwerty = mutableListOf<MindOrks>()
+    fun draw(): MutableList<Array<Double>> {
+        var qwerty = mutableListOf<Array<Double>>()
         for (i in 0..9){
-            qwerty.add(MindOrks(i.toDouble(), Math.pow(i.toDouble(), 2.0)))
+            var x = (0..9).random()
+            qwerty.add(arrayOf(x.toDouble(), Math.pow(x.toDouble(), 2.0)))
         }
         return qwerty
     }
+    var ans = draw()
 }
-class MindAdapter(ddata: MutableList<MindOrks>):RecyclerView.Adapter<MindAdapter.Companion.MindViewHolder>(){
+class MindAdapter(ddata: MutableList<Array<Double>>):RecyclerView.Adapter<MindAdapter.Companion.MindViewHolder>(){
     var data = ddata
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MindViewHolder {
         var qqq = LayoutInflater.from(parent.context).inflate(R.layout.recycle_view, parent, false)
@@ -33,10 +35,9 @@ class MindAdapter(ddata: MutableList<MindOrks>):RecyclerView.Adapter<MindAdapter
         class MindViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
             var x: TextView = itemView.findViewById(R.id.textx)
             var y: TextView = itemView.findViewById(R.id.texty)
-            fun bind(mindOrks: MindOrks){
-                x.setText(mindOrks.x.toString())
-                y.setText(mindOrks.y.toString())
-
+            fun bind(mindOrks: Array<Double>){
+                x.setText(mindOrks[0].toString())
+                y.setText(mindOrks[1].toString())
             }
         }
     }
@@ -54,14 +55,15 @@ class NameMindAdapter(ddata: MutableList<MindOrks>):RecyclerView.Adapter<NameMin
         var fragmentManager : FragmentManager? = null
         class NameMindViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
             var text : TextView = itemView.findViewById(R.id.name)
-            var cardView : CardView = itemView.findViewById(R.id.cardview1)
+            var cardView : CardView = itemView.findViewById(R.id.card1)
             fun bind(mindOrks: MindOrks){
                 text.setText(mindOrks.name)
-                cardView.setOnClickListener { v ->
+                cardView.setOnClickListener {
                     val fm = fragmentManager
                     val ft = fm?.beginTransaction()
-                    var f = MindFragment().apply { ddata = mindOrks.draw() }
+                    var f = MindFragment().apply { ddata = mindOrks.ans }
                     ft?.replace(R.id.dostalo, f)
+                    ft?.addToBackStack(null)
                     ft?.commit()
                 }
             }

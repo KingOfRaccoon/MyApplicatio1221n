@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MindFragment:Fragment() {
-    var ddata = mutableListOf<MindOrks>()
+    var ddata = mutableListOf<Array<Double>>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
